@@ -1,0 +1,36 @@
+<head>
+  <title>bucket52</title>
+</head>
+
+<body>
+	{{> header}}
+	{{> calendar}}
+	{{> footer}}
+</body>
+
+<template name="header">
+	<header>
+		<span class="burger">
+		
+		</span>
+		<h1>bucket52</h1>
+	</header>
+</template>
+
+<template name="footer">
+	<span>Don't forget the footer</span>
+</template>
+
+<template name="calendar">
+ 	<div class="calendar">
+		{{#each weeks}}
+		 	{{> week}}
+		{{/each}}
+	</div>
+</template>
+
+<template name="week">
+	<div class="week">
+		<h1>{{week}}</h1>
+	</div>
+</template>

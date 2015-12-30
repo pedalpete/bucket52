@@ -1,18 +1,12 @@
+var b52 = {};
+b52.weeks = Math.pow(2, 53).toString(2).split('').map((i,j) => {
+	return {'week': j+1};
+});
+
 if (Meteor.isClient) {
   // counter starts at 0
-  Session.setDefault('counter', 0);
-
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
-    }
-  });
-
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
-    }
+  Template.calendar.helpers({
+	  weeks: b52.weeks
   });
 }
 

@@ -1,0 +1,17 @@
+@for $i from 1 through 53 {
+    .week:nth-child(n+#{$i}) {
+        background: rgba(random(256)-1, random(256)-1, random(256)-1, 0.5);
+    }
+}
+.week {
+	width: 15.9vw;
+	height: 15.9vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+}
+
+.week:nth-child(54) {
+	visibility: hidden;
+}
