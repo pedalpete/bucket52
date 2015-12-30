@@ -1,6 +1,16 @@
 Memories = new Mongo.Collection("memories");
 
 var b52 = {
+	buildMemories: function() {
+		this.memories = Memories.find({});
+				this.memories.forEach(function(mem){
+				if (b52.weeks[mem.week-1].memories.length > 0) {
+					b52.weeks[mem.week-1].memories = [];
+				}
+				b52.weeks[mem.week-1].memories.push(mem);
+			});
+		return b52.weeks;
+	},
 	checkValidWeek: function(week) {
 		return week === this.currentWeek;
 	},
@@ -12,26 +22,19 @@ var b52 = {
 				'memories': []
 			};
 		});
-		
 		this.weeks[this.currentWeek].currentWeek = true;
 		
 	},
 	memories: []
 }; 
 
+
 if (Meteor.isClient) {
 	b52.init();
-
+	Meteor.subscribe("memories");
 	Template.calendar.helpers({
 		weeks: function() {
-			b52.memories = Memories.find({});
-				b52.memories.forEach(function(mem){
-				if (b52.weeks[mem.week].memories.length > 0) {
-					b52.weeks[mem.week].memories = [];
-				}
-				b52.weeks[mem.week].memories.push(mem);
-			});
-			return b52.weeks;
+			return b52.buildMemories();
 		}
 	});
 	
@@ -42,11 +45,23 @@ if (Meteor.isClient) {
 				week: evt.target.text[1].value
 			};
 			evt.preventDefault();
-			if(!b52.checkValidWeek(formObj.week)) return Router.go('error');
+			//if(!b52.checkValidWeek(formObj.week)) return Router.go('error');
 			Meteor.call('addMemory', formObj);
 			history.back();
 		}
 	});
+	
+	Template.memory.events({
+		'click .delete': function(evt) {
+			var id = evt.target.attributes.getNamedItem('data-id').value;
+			var week = evt.target.attributes.getNamedItem('data-week').value;
+			Meteor.call('deleteMemory', id);
+			b52.weeks[week-1].memories = b52.weeks[week-1].memories.filter(function(mem){
+				return mem.id === id;
+			});
+			history.back();
+		}
+	})
 }
 
 Meteor.methods({
@@ -56,12 +71,16 @@ Meteor.methods({
 			createdAt: new Date(),
 			week: formObj.week
 		});
+	},
+	deleteMemory: function(id) {
+		Memories.remove(id);
 	}
 });
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    // code to run on server at startup
+	Meteor.publish("memories", function () {
+		return Memories.find({});
+	});
   });
 }
-
