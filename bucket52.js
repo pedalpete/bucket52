@@ -25,11 +25,32 @@ var b52 = {
 		this.weeks[this.currentWeek].currentWeek = true;
 		
 	},
-	memories: []
+	memories: [],
+	slideout: {
+		state: 'closed'
+	}
 }; 
 
 
 if (Meteor.isClient) {
+	Template.layout.onRendered(function () {
+		var template = this;
+		b52.slideout.model = new Slideout({
+			'menu': template.$('.slideout-menu').get(0),
+			'panel': $('.content').get(0),
+			'padding': 256,
+			'tolerance': 70
+		});
+	});
+	
+	Tracker.autorun(function() {
+		if (!Meteor.userId()) {
+			//make sure the menu is closed
+			b52.slideout.state = 'closed';
+			if(!b52.slideout.model) return;
+			b52.slideout.model.close();
+		}
+	});
 	b52.init();
 	Meteor.subscribe("memories");
 	Template.calendar.helpers({
@@ -48,6 +69,16 @@ if (Meteor.isClient) {
 			//if(!b52.checkValidWeek(formObj.week)) return Router.go('error');
 			Meteor.call('addMemory', formObj);
 			history.back();
+		}
+	});
+	Template.header.events({
+		'click .menu-button': function(evt) {
+			if(b52.slideout.state === 'closed'){
+				b52.slideout.state = 'open';	
+			 	return b52.slideout.model.open();
+			}
+			b52.slideout.state = 'closed';
+			b52.slideout.model.close();
 		}
 	});
 	

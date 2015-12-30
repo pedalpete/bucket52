@@ -1,2 +1,14 @@
 header {
+	display: flex;
+	background-color: rgb(40,40,40);
+	color: #fff;
+	padding: 0.5rem;
+}
+
+header h1 {
+	font-size: 1rem;
+}
+
+header .menu-button {
+	padding: 0.8rem;
 }

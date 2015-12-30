@@ -19,3 +19,6 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 fourseven:scss
 momentjs:moment
 iron:router
+accounts-facebook
+accounts-ui
+chriswessels:slideout
