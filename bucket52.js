@@ -66,6 +66,7 @@ if (Meteor.isClient) {
 			b52.slideout.model.close();
 		}
 	});
+	
 	b52.init();
 	Meteor.subscribe("memories");
 	Template.calendar.helpers({
@@ -81,7 +82,7 @@ if (Meteor.isClient) {
 				week: evt.target.text[1].value
 			};
 			evt.preventDefault();
-			//if(!b52.checkValidWeek(formObj.week)) return Router.go('error');
+			if(!b52.checkValidWeek(formObj.week)) return Router.go('error');
 			Meteor.call('addMemory', formObj);
 			history.back();
 		},

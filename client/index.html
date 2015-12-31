@@ -24,31 +24,19 @@
 
 <template name="layout">
 	<div id="slideout-menu" class="menu slideout-menu">
-		{{> loginButtons}}
+		<ul>
+			<li>I think you're pretty awesome</li>
+			<li><a href="/about">about</a></li>
+			<li><a href="/contact">contact</a></li>
+			<li><a href="/terms">terms</a></li>
+			<li>{{> loginButtons}}</li>
+		</ul>
   	</div>
 	<div class="content">
 		{{> header}}
 		{{> yield}}
 		{{> footer}}
 	</div>
-</template>
-<template name="footer">
-	<span>Don't forget the footer</span>
-</template>
-
-<template name="calendar">
-	{{#if currentUser}}
-		<div class="calendar">
-			{{#each weeks}}
-				{{> week}}
-			{{/each}}
-			<div class="week footer">
-				about
-			</div>
-		</div>
-	{{else}}
-		{{> welcome}}
-	{{/if}}
 </template>
 
 <template name="error">
