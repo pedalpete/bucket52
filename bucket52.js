@@ -2,7 +2,7 @@ Memories = new Mongo.Collection("memories");
 
 var b52 = {
 	buildMemories: function() {
-		this.memories = Memories.find({});
+		this.memories = Memories.find({owner: Meteor.userId()});
 				this.memories.forEach(function(mem){
 				if (b52.weeks[mem.week-1].memories.length > 0) {
 					b52.weeks[mem.week-1].memories = [];
@@ -97,13 +97,24 @@ if (Meteor.isClient) {
 
 Meteor.methods({
 	addMemory: function(formObj) {
+		if (! Meteor.userId()) {
+      		throw new Meteor.Error("not-authorized");
+    	}
+		if (formObj.week < 1 || formObj.week > 53){
+			throw new Meteor.Error("invalid-week");
+		}
 		Memories.insert({
 			text: formObj.text,
 			createdAt: new Date(),
-			week: formObj.week
+			week: formObj.week,
+			owner: Meteor.userId()
 		});
 	},
 	deleteMemory: function(id) {
+		var mem = Memories.findOne(id);
+		if(mem.owner !== Meteor.userId()){
+			throw new Meteor.Error('not authorized');
+		}
 		Memories.remove(id);
 	}
 });
@@ -111,7 +122,7 @@ Meteor.methods({
 if (Meteor.isServer) {
   Meteor.startup(function () {
 	Meteor.publish("memories", function () {
-		return Memories.find({});
+		return Memories.find({owner: this.userId});
 	});
   });
 }
