@@ -12,10 +12,12 @@ body {
 	font-family: $raleway-font;
 	background: $fade;
 	background-attachment: fixed;
+	font-size: 10px;
 }
 
 a, a:visited, a:link, a:active, a:hover {
 	text-decoration: none;
+	font-size: 1rem;
 }
 .content {
 	height: 100%;
@@ -39,6 +41,7 @@ header h1 span {
 
 .back {
 	margin: 1rem;
+	font-size: 1rem;
 	display: block;
 	i {
 		padding: 0.5rem;

@@ -11,20 +11,28 @@
 	align-items: center;
 	color: #fff;
 	position: relative;
-}
-
-.week:nth-child(54) {
-	visibility: hidden;
-}
-
-.week h1 {
-	opacity: 0.4;
-	color: #333;
-}
-.week.current h1 {
-	opacity: 1;
-	background-color: #888;
-	color: #fff;
-	border-radius: 50%;
-	padding: 5vh;
+	h1 {
+		opacity: 0.4;
+		color: #333;
+	}
+	&.current h1 {
+		opacity: 1;
+		background-color: #888;
+		color: #fff;
+		border-radius: 50%;
+		padding: 0.25rem;
+	}
+	.memory-snip {
+		padding: 0.35rem;
+		max-height: 80%;
+		height: 80%;
+		overflow: hidden;
+		color: rgba(250, 250, 250, 0.7);
+		text-overflow: ellipsis;
+	}
+	&.footer {
+		 @media screen and (max-width: 450px) {
+			 width: 31.8vw;
+		 }
+	}
 }

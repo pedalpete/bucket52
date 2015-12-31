@@ -1,0 +1,19 @@
+<template name="week">
+	{{#if currentWeek}}
+		<a class="week current" href="addMemory/{{week}}">
+			{{#each memories}}
+				<a class="memory-snip" href="memory/{{_id}}">{{text}}</a>
+			{{else}}
+				<h1>{{week}}</h1>
+			{{/each}}
+		</a>
+	{{else}}
+		<div class="week">
+			{{#each memories}}
+				<a  class="memory-snip" href="memory/{{_id}}">{{text}}</a>
+			{{else}}
+				<h1>{{week}}</h1>
+			{{/each}}
+		</div>
+	{{/if}}
+</template>

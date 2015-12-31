@@ -17,9 +17,21 @@ var b52 = {
 	hasClass: function(className, elem) {
 		return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
 	},
+	getWeek: function() {
+		var date = new Date();
+		date.setHours(0, 0, 0, 0);
+		// Thursday in current week decides the year.
+		date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+		// January 4 is always in week 1.
+		var week1 = new Date(date.getFullYear(), 0, 4);
+		// Adjust to Thursday in week 1 and count number of weeks from date to week1.
+		return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000
+								- 3 + (week1.getDay() + 6) % 7) / 7);
+	},
 	init: function() {
-		this.currentWeek = moment("12-25-1995", "MM-DD-YYYY").week();
-		this.weeks = Math.pow(2, 53).toString(2).split('').map((i,j) => {
+		this.currentWeek = this.getWeek() -1;
+		console.log(this.currentWeek);
+		this.weeks = Math.pow(2, 52).toString(2).split('').map((i,j) => {
 			return {
 				'week': j+1,
 				'memories': []

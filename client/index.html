@@ -42,33 +42,14 @@
 			{{#each weeks}}
 				{{> week}}
 			{{/each}}
+			<div class="week footer">
+				about
+			</div>
 		</div>
 	{{else}}
 		{{> welcome}}
 	{{/if}}
 </template>
-
-<template name="week">
-	{{#if currentWeek}}
-		<a class="week current" href="addMemory/{{week}}">
-			{{#each memories}}
-				<a class="memory" href="memory/{{_id}}">{{text}}</a>
-			{{else}}
-				<h1>{{week}}</h1>
-			{{/each}}
-		</a>
-	{{else}}
-		<div class="week">
-			{{#each memories}}
-				<a href="memory/{{_id}}" class="memory">{{text}}</a>
-			{{else}}
-				<h1>{{week}}</h1>
-			{{/each}}
-		</div>
-	{{/if}}
-</template>
-
-
 
 <template name="error">
 	<h1>Sorry, an error occured</h1>
