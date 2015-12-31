@@ -14,6 +14,9 @@ var b52 = {
 	checkValidWeek: function(week) {
 		return week === this.currentWeek;
 	},
+	hasClass: function(className, elem) {
+		return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
+	},
 	init: function() {
 		this.currentWeek = moment("12-25-1995", "MM-DD-YYYY").week();
 		this.weeks = Math.pow(2, 53).toString(2).split('').map((i,j) => {
@@ -69,6 +72,14 @@ if (Meteor.isClient) {
 			//if(!b52.checkValidWeek(formObj.week)) return Router.go('error');
 			Meteor.call('addMemory', formObj);
 			history.back();
+		},
+		"keyup textarea": function(evt) {
+			var button = document.querySelector('.add-memory button');
+			var isVisible = b52.hasClass('show', button);
+			if (evt.target.value.length > 0 && !isVisible) {
+				return button.className = 'show';
+			}
+			if (evt.target.value.length === 0 && isVisible) return button.className='';
 		}
 	});
 	Template.header.events({
