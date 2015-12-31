@@ -6,6 +6,12 @@
     align-self: center;
     padding: 3rem;
 	.terms {
-		font-size: 0.75rem;
+		display: block;
+		font-size: 0.5rem;
+		margin-top: 1.5rem;
+		a {
+			color: rgb(10, 10, 10);
+			font-size: 0.5rem;
+		}
 	}
 }
