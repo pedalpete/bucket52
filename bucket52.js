@@ -12,35 +12,41 @@ var b52 = {
 		return b52.weeks;
 	},
 	checkValidWeek: function(week) {
-		return week === this.currentWeek;
+		return week == this.currentWeek;
 	},
 	hasClass: function(className, elem) {
 		return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
 	},
-	getWeek: function() {
-		var date = new Date();
-		date.setHours(0, 0, 0, 0);
-		// Thursday in current week decides the year.
-		date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
-		// January 4 is always in week 1.
-		var week1 = new Date(date.getFullYear(), 0, 4);
-		// Adjust to Thursday in week 1 and count number of weeks from date to week1.
-		return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000
-								- 3 + (week1.getDay() + 6) % 7) / 7);
+	getWeeks: function() {
+		var year = moment().year();
+		var date = new Date(year, 0, 1);
+		while (date.getDay() != 0) {
+			date.setDate(date.getDate() + 1);
+		}
+		var days = [];
+		while (date.getFullYear() == year) {
+			var m = date.getMonth() + 1;
+			var d = date.getDate();
+			days.push({
+				week: days.length + 1,
+				memories: [],
+				date: new Date(date)
+			});
+			date.setDate(date.getDate() + 7);
+		}
+		return days;
 	},
 	init: function() {
-		this.currentWeek = this.getWeek() -1;
-		console.log(this.currentWeek);
-		this.weeks = Math.pow(2, 52).toString(2).split('').map((i,j) => {
-			return {
-				'week': j+1,
-				'memories': []
-			};
-		});
-		this.weeks[this.currentWeek].currentWeek = true;
-		
+		this.weeks = this.getWeeks();
+		this.weeks[this.setCurrentWeek() -1].currentWeek = true;
 	},
 	memories: [],
+	setCurrentWeek: function(){
+		var today = moment();
+		var firstDay = moment(this.weeks[0].date);
+		this.currentWeek =  Math.floor(firstDay.diff(today, 'days') / 7) + 1;
+		return this.currentWeek;
+	},
 	slideout: {
 		state: 'closed'
 	}
@@ -77,11 +83,11 @@ if (Meteor.isClient) {
 	
 	Template.addMemory.events({
 		"submit .add-memory": function(evt) {
+			evt.preventDefault();
 			var formObj = {
 				text: evt.target.text[0].value,
 				week: evt.target.text[1].value
 			};
-			evt.preventDefault();
 			if(!b52.checkValidWeek(formObj.week)) return Router.go('error');
 			Meteor.call('addMemory', formObj);
 			history.back();
