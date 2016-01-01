@@ -23,6 +23,14 @@
 </template>
 
 <template name="layout">
+	{{> sidemenu}}
+	<div class="content">
+		{{> header}}
+		{{> yield}}
+	</div>
+</template>
+
+<template name="sidemenu">
 	<div id="slideout-menu" class="menu slideout-menu">
 		<ul>
 			<li>I think you're pretty awesome</li>
@@ -32,12 +40,7 @@
 			<li>{{> loginButtons}}</li>
 		</ul>
   	</div>
-	<div class="content">
-		{{> header}}
-		{{> yield}}
-	</div>
 </template>
-
 <template name="error">
 	<h1>Sorry, an error occured</h1>
 	<a href="/">Go Back To Calendar</a>

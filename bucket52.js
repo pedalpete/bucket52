@@ -62,6 +62,7 @@ if (Meteor.isClient) {
 			'padding': 256,
 			'tolerance': 70
 		});
+		window.addEventListener('onhashchange', b52.slideout.model.close);
 	});
 	
 	Tracker.autorun(function() {
@@ -70,6 +71,7 @@ if (Meteor.isClient) {
 			b52.slideout.state = 'closed';
 			if(!b52.slideout.model) return;
 			b52.slideout.model.close();
+			
 		}
 	});
 	
@@ -80,7 +82,11 @@ if (Meteor.isClient) {
 			return b52.buildMemories();
 		}
 	});
-	
+	Template.sidemenu.events({
+		'click a': function(){
+			b52.slideout.model.close();
+		}
+	})
 	Template.addMemory.events({
 		"submit .add-memory": function(evt) {
 			evt.preventDefault();

@@ -1,6 +1,5 @@
 <template name="memory">
-	<a href="/" class="back"><i class="fa fa-arrow-circle-o-left"></i>back</a>
-	
+	{{> back}}
 	<div class="memory">
 		<div>{{text}}</div>
 		<a class="delete" data-id="{{_id}}" data-week="{{week}}">
