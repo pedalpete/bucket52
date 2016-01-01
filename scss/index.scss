@@ -13,6 +13,7 @@ body {
 	background: $fade;
 	background-attachment: fixed;
 	font-size: 10px;
+	user-select: none;
 }
 
 a, a:visited, a:link, a:active, a:hover {
