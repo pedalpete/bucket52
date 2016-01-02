@@ -85,7 +85,7 @@ if (Meteor.isClient) {
 		},
 		needsEmail: function() {
 			var hasEmail = Emails.find({owner: Meteor.userId()});
-			return hasEmail.count() < 0;
+			return hasEmail.count() == 0;
 		}
 	});
 	
