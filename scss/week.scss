@@ -36,8 +36,6 @@
 		text-overflow: ellipsis;
 	}
 	&.footer {
-		 @media screen and (max-width: 450px) {
-			 width: 31.8vw;
-		 }
+		 width: 31.8vw;
 	}
 }

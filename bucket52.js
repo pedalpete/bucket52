@@ -1,4 +1,5 @@
 Memories = new Mongo.Collection("memories");
+Emails = new Mongo.Collection("emails");
 
 var b52 = {
 	buildMemories: function() {
@@ -77,16 +78,30 @@ if (Meteor.isClient) {
 	
 	b52.init();
 	Meteor.subscribe("memories");
+	Meteor.subscribe("emails");
 	Template.calendar.helpers({
 		weeks: function() {
 			return b52.buildMemories();
+		},
+		needsEmail: function() {
+			var hasEmail = Emails.find({owner: Meteor.userId()});
+			return hasEmail.count() < 0;
 		}
 	});
+	
 	Template.sidemenu.events({
 		'click a': function(){
 			b52.slideout.model.close();
 		}
-	})
+	});
+	
+	Template.emailForm.events({
+		"submit form": function(evt){
+			evt.preventDefault();
+			Meteor.call('addEmail', evt.target.email.value);	
+		}
+	});
+	
 	Template.addMemory.events({
 		"submit .add-memory": function(evt) {
 			evt.preventDefault();
@@ -102,9 +117,11 @@ if (Meteor.isClient) {
 			var button = document.querySelector('.add-memory button');
 			var isVisible = b52.hasClass('show', button);
 			if (evt.target.value.length > 0 && !isVisible) {
-				return button.className = 'show';
+				return button.className +=' show';
 			}
-			if (evt.target.value.length === 0 && isVisible) return button.className='';
+			if (evt.target.value.length === 0 && isVisible) {
+				button.className = button.className.replace(' show', '');
+			}
 		}
 	});
 	Template.header.events({
@@ -152,6 +169,17 @@ Meteor.methods({
 			throw new Meteor.Error('not authorized');
 		}
 		Memories.remove(id);
+	},
+	addEmail: function(email) {
+		var hasEmail = Emails.find({owner: Meteor.userId()});
+		console.log(hasEmail.count());
+		if (hasEmail.count()) hasEmail.forEach(function(em){
+			Emails.remove(em._id);
+		});
+		Emails.insert({
+			owner: Meteor.userId(),
+			email: email
+		});
 	}
 });
 
@@ -159,6 +187,10 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
 	Meteor.publish("memories", function () {
 		return Memories.find({owner: this.userId});
+	});
+	
+	Meteor.publish("emails", function() {
+		return Emails.find({owner: this.userId});
 	});
   });
 }

@@ -14,25 +14,4 @@
 		padding: 1.5rem;
 		resize: none;
 	}
-
-	button {
-		width: 50vw;
-		padding: 1rem;
-		background-color: springgreen;
-		color: #fff;
-		font-size: 1.5rem;
-		border: none;
-		display: none;
-		margin: 2rem;
-		display: none;
-		flex-direction: row;
-		i {
-			align-self: center;
-			font-size: 3rem;
-		}
-	}
-	
-	button.show {
-		display: flex;
-	}
 }

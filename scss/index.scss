@@ -10,10 +10,11 @@ body {
 	flex-direction: column;
 	margin: 0;
 	font-family: $raleway-font;
-	background: $fade;
 	background-attachment: fixed;
 	font-size: 10px;
 	user-select: none;
+	background: $fade;
+	background-color:  rgb(51, 173, 255);
 }
 
 a, a:visited, a:link, a:active, a:hover {
@@ -27,6 +28,11 @@ a, a:visited, a:link, a:active, a:hover {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	background: $fade;
+}
+
+.slideout-menu {
+	background: $fade;
 }
 
 header h1 span {
@@ -49,3 +55,26 @@ header h1 span {
 		padding: 0.5rem;
 	}
 }
+
+.button {
+	padding: 1rem;
+	background-color: springgreen;
+	color: #fff;
+	font-size: 1.5rem;
+	border: none;
+	display: none;
+	margin: 2rem 0;
+	display: none;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	i {
+		font-size: 3rem;
+		margin-left: 1rem;
+	}
+	&.show {
+		display: flex;
+	}
+}
+
+

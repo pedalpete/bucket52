@@ -1,0 +1,21 @@
+.add-email {
+	width: 30rem;
+	display: block;
+	padding: 4rem;
+	
+	 @media screen and (max-width: 750px) {
+		width: 100%;	 
+	 }
+	p {
+		font-size: 1rem;
+	}
+	
+	input {
+		background-color: rgba(250, 250, 250, 0.7);
+		border-radius: 2px;
+		border: none;
+		font-size: 1.5rem;
+		padding: 1.5rem;	
+		max-width: 90%;
+	}
+}

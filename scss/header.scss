@@ -3,14 +3,15 @@ header {
 	background-color: rgb(40,40,40);
 	color: #fff;
 	padding: 0.5rem;
-}
+	min-height: 3rem;
 
-header h1 {
-	font-size: 1rem;
-}
+	h1 {
+		font-size: 1rem;
+	}
 
-header .menu-button {
-	padding: 0.8rem;
-	font-size: 1rem;
-	cursor: pointer;
+	.menu-button {
+		padding: 0.8rem;
+		font-size: 1rem;
+		cursor: pointer;
+	}
 }

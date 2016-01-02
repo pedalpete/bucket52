@@ -1,4 +1,9 @@
 <template name="calendar">
+	{{#if needsEmail}}
+		<div class="modal">
+			{{> emailForm}}
+		</div>
+	{{/if}}
 	{{#if currentUser}}
 		<div class="calendar">
 			{{#each weeks}}
