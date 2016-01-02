@@ -19,8 +19,8 @@ fourseven:scss
 momentjs:moment
 iron:router
 accounts-facebook
-accounts-ui
 chriswessels:slideout
 fortawesome:fontawesome
 seba:minifiers-autoprefixer
 reywood:iron-router-ga
+accounts-ui-unstyled
