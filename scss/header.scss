@@ -1,5 +1,6 @@
 header {
 	display: flex;
+	flex-direction: row;
 	background-color: rgb(40,40,40);
 	color: #fff;
 	padding: 0.5rem;
@@ -13,5 +14,6 @@ header {
 		padding: 0.8rem;
 		font-size: 1rem;
 		cursor: pointer;
+		float: left;
 	}
 }

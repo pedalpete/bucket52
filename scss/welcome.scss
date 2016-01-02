@@ -4,6 +4,8 @@
 	max-width: 70vh;
     background-color: rgba(250, 250, 250, 0.7);
     align-self: center;
+	margin-left: auto; // for iphone
+	margin-right: auto; // for iphone
     padding: 3rem;
 	.terms {
 		display: block;
