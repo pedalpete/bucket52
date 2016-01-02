@@ -15,17 +15,17 @@
 		opacity: 0.4;
 		color: #333;
 	}
-	&.current > div.bubble {
-		opacity: 1;
-		width: 70%;
-		height: 70%;
-		background-color: #888;
-		color: #fff;
-		border-radius: 50%;
-		padding: 0.5rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+	&.current {
+		background-image: radial-gradient(rgba(40,40,40, 0.5) 55%, rgba(40,40,40,0) 57%);
+		> div.bubble {
+			opacity: 1;
+			color: #fff;
+			border-radius: 50%;
+			padding: 0.5rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 	}
 	.memory-snip {
 		padding: 0.35rem;
