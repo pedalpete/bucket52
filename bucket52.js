@@ -1,5 +1,4 @@
 Memories = new Mongo.Collection("memories");
-Emails = new Mongo.Collection("emails");
 
 var b52 = {
 	buildMemories: function() {
@@ -73,7 +72,6 @@ if (Meteor.isClient) {
 	
 	b52.init();
 	Meteor.subscribe("memories");
-	Meteor.subscribe("emails");
 	Template.calendarBack.helpers({
 		weeks: function(){
 			return b52.calendarBack;
@@ -83,11 +81,6 @@ if (Meteor.isClient) {
 	Template.calendar.helpers({
 		weeks: function() {
 			return b52.buildMemories();
-		},
-		needsEmail: function() {
-			if (!Meteor.userId()) return false;
-			var hasEmail = Emails.find({owner: Meteor.userId()});
-			return hasEmail.count() == 0;
 		}
 	});
 	
@@ -97,13 +90,6 @@ if (Meteor.isClient) {
 		},
 		'click a.logout': function() {
 			Meteor.logout();
-		}
-	});
-	
-	Template.emailForm.events({
-		"submit form": function(evt){
-			evt.preventDefault();
-			Meteor.call('addEmail', evt.target.email.value);	
 		}
 	});
 	
@@ -180,17 +166,6 @@ Meteor.methods({
 			throw new Meteor.Error('not authorized');
 		}
 		Memories.remove(id);
-	},
-	addEmail: function(email) {
-		var hasEmail = Emails.find({owner: Meteor.userId()});
-		console.log(hasEmail.count());
-		if (hasEmail.count()) hasEmail.forEach(function(em){
-			Emails.remove(em._id);
-		});
-		Emails.insert({
-			owner: Meteor.userId(),
-			email: email
-		});
 	}
 });
 
@@ -198,10 +173,6 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
 	Meteor.publish("memories", function () {
 		return Memories.find({owner: this.userId});
-	});
-	
-	Meteor.publish("emails", function() {
-		return Emails.find({owner: this.userId});
 	});
   });
 }
