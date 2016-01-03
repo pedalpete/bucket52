@@ -1,5 +1,5 @@
 <template name="week">
-	{{#if currentWeek}}
+	{{#if weekLink}}
 		<a class="week {{#unless memories}}current{{/unless}}" href="addMemory/{{week}}">
 			{{#each memories}}
 				<a class="memory-snip" href="memory/{{_id}}">{{text}}</a>

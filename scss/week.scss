@@ -17,6 +17,9 @@
 	}
 	&.current {
 		background-image: radial-gradient(rgba(240,40,40, 0.5) 55%, rgba(40,40,40,0) 57%);
+		&:first-of-type {
+			background-image: radial-gradient(rgba(0,0,0,0) 52%, rgba(240,40,40, 0.5) 55%, rgba(40,40,40,0) 57%);
+		}
 		> div.bubble {
 			opacity: 1;
 			color: #fff;

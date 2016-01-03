@@ -12,7 +12,7 @@ var b52 = {
 		return b52.weeks;
 	},
 	checkValidWeek: function(week) {
-		return week == this.currentWeek;
+		return week == this.currentWeek || week == this.currentWeek - 1;
 	},
 	calendarBack: new Array(51).join().split('').map(function(a,i){return i}),
 	hasClass: function(className, elem) {
@@ -40,6 +40,7 @@ var b52 = {
 	init: function() {
 		this.weeks = this.getWeeks();
 		this.weeks[this.setCurrentWeek() -1].currentWeek = true;
+		if (this.currentWeek > 1) this.weeks[this.currentWeek - 2].previousWeek = true;
 	},
 	memories: [],
 	setCurrentWeek: function(){
@@ -115,6 +116,12 @@ if (Meteor.isClient) {
 			}
 		}
 	});
+	
+	Template.week.helpers({
+		weekLink: function(){
+			return this.currentWeek || this.previousWeek;
+		}
+	})
 	Template.header.events({
 		'click .menu-button': function(evt) {
 			if(b52.slideout.state === 'closed'){
