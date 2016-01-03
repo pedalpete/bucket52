@@ -4,8 +4,8 @@
     }
 }
 .week {
-	width: 15.9vw;
-	height: 15.9vw;
+	width: calc(100% / 5);
+	height: calc(100vw / 5);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -16,7 +16,7 @@
 		color: #333;
 	}
 	&.current {
-		background-image: radial-gradient(rgba(40,40,40, 0.5) 55%, rgba(40,40,40,0) 57%);
+		background-image: radial-gradient(rgba(240,40,40, 0.5) 55%, rgba(40,40,40,0) 57%);
 		> div.bubble {
 			opacity: 1;
 			color: #fff;
@@ -36,6 +36,6 @@
 		text-overflow: ellipsis;
 	}
 	&.footer {
-		 width: 31.8vw;
+		 width: calc((100% / 5) *3);
 	}
 }

@@ -16,8 +16,6 @@
 </head>
 
 <body>
-
-
 </body>
 
 <template name="header">
@@ -29,20 +27,22 @@
 
 <template name="layout">
 	{{> sidemenu}}
-	<div class="content">
+	<div class="content pusher">
+		<div class="sidebar-modal"></div>
 		{{> header}}
 		{{> yield}}
 	</div>
 </template>
 
 <template name="sidemenu">
-	<div id="slideout-menu" class="menu slideout-menu">
+	<div id="slideout-menu" class="sidebar">
+		{{> calendarBack}}
 		<ul>
 			<li>I think you're pretty awesome</li>
 			<li><a href="/about">about</a></li>
 			<li><a href="/contact">contact</a></li>
 			<li><a href="/terms">terms</a></li>
-			<li>{{> loginButtons}}</li>
+			<li><a class="logout" href="/">logout</a></li>
 		</ul>
   	</div>
 </template>

@@ -15,6 +15,7 @@ var b52 = {
 	checkValidWeek: function(week) {
 		return week == this.currentWeek;
 	},
+	calendarBack: new Array(51).join().split('').map(function(a,i){return i}),
 	hasClass: function(className, elem) {
 		return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
 	},
@@ -48,8 +49,18 @@ var b52 = {
 		this.currentWeek =  Math.floor(firstDay.diff(today, 'days') / 7) + 1;
 		return this.currentWeek;
 	},
-	slideout: {
-		state: 'closed'
+	slideout: { 
+		state: 'closed',
+		close: function() {
+			var slideout = document.body;
+			slideout.className = slideout.className.replace('show-sidebar', '');
+			b52.slideout.state = 'closed';
+		},
+		open: function() {
+			var slideout = document.body;
+			slideout.className = slideout.className += 'show-sidebar';
+			b52.slideout.state = 'open';
+		}
 	}
 }; 
 
@@ -57,33 +68,24 @@ var b52 = {
 if (Meteor.isClient) {
 	Template.layout.onRendered(function () {
 		var template = this;
-		b52.slideout.model = new Slideout({
-			'menu': template.$('.slideout-menu').get(0),
-			'panel': $('.content').get(0),
-			'padding': 256,
-			'tolerance': 70
-		});
-		window.addEventListener('onhashchange', b52.slideout.model.close);
-	});
-	
-	Tracker.autorun(function() {
-		if (!Meteor.userId()) {
-			//make sure the menu is closed
-			b52.slideout.state = 'closed';
-			if(!b52.slideout.model) return;
-			b52.slideout.model.close();
-			
-		}
+		window.addEventListener('onhashchange', b52.slideout.close);
 	});
 	
 	b52.init();
 	Meteor.subscribe("memories");
 	Meteor.subscribe("emails");
+	Template.calendarBack.helpers({
+		weeks: function(){
+			return b52.calendarBack;
+		}
+	});
+	
 	Template.calendar.helpers({
 		weeks: function() {
 			return b52.buildMemories();
 		},
 		needsEmail: function() {
+			if (!Meteor.userId()) return false;
 			var hasEmail = Emails.find({owner: Meteor.userId()});
 			return hasEmail.count() == 0;
 		}
@@ -91,7 +93,10 @@ if (Meteor.isClient) {
 	
 	Template.sidemenu.events({
 		'click a': function(){
-			b52.slideout.model.close();
+			b52.slideout.close();
+		},
+		'click a.logout': function() {
+			Meteor.logout();
 		}
 	});
 	
@@ -128,12 +133,18 @@ if (Meteor.isClient) {
 		'click .menu-button': function(evt) {
 			if(b52.slideout.state === 'closed'){
 				b52.slideout.state = 'open';	
-			 	return b52.slideout.model.open();
+			 	return b52.slideout.open();
 			}
 			b52.slideout.state = 'closed';
-			b52.slideout.model.close();
+			b52.slideout.close();
 		}
 	});
+	
+	Template.layout.events({
+		'click .sidebar-modal': function(){
+			b52.slideout.close();
+		}
+	})
 	
 	Template.memory.events({
 		'click .delete': function(evt) {
@@ -145,7 +156,7 @@ if (Meteor.isClient) {
 			});
 			history.back();
 		}
-	})
+	});
 }
 
 Meteor.methods({

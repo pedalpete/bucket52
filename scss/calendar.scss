@@ -4,3 +4,18 @@
 	flex-wrap: wrap;
 	justify-content: center;	
 }
+
+.hold-calendar {
+	position: fixed;
+	top: 3rem;
+	z-index: -1;
+	.calendar .week {
+		width: calc(100vw / 5);
+	}
+	.week.current {
+		background-image: none;
+	}
+	.week span, .week h1 {
+		font-size: 0;
+	}
+}

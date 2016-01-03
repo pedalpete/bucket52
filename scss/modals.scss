@@ -1,4 +1,4 @@
-.modal {
+.modal, .sidebar-modal {
 	position: absolute;
 	top: 4rem;
 	bottom: 0;
@@ -14,3 +14,8 @@
 	color: #fff;
 	overflow: hidden;
 }
+
+.sidebar-modal {
+	display: none
+}
+

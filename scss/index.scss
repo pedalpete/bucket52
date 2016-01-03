@@ -16,6 +16,9 @@ body {
 	background: $fade;
 	background-attachment: fixed;
 	background-color:  rgb(51, 173, 255);
+	&.show-sidebar {
+		overflow: hidden;
+	}
 }
 
 a, a:visited, a:link, a:active, a:hover {
@@ -29,10 +32,13 @@ a, a:visited, a:link, a:active, a:hover {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
-}
-
-.slideout-menu {
-	background: $fade;
+	transition: transform 0.3s;
+	.show-sidebar & {
+		transform: translateX(18rem);
+		.sidebar-modal {
+			display: block;
+		}
+	}
 }
 
 header h1 span {
