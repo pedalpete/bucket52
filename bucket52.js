@@ -184,9 +184,13 @@ if (Meteor.isClient) {
 		},
 		'click #login-signin' : function(e, t){
 			e.preventDefault();
-			var email = t.find('#login-email').value
+			
+			var email = t.find('#login-email').value;
+			if (t.find('#login-email').checkValidity() === false) {
+				return t.find('.error').innerHTML = 'Invalid Email';
+			}
 			var password = t.find('#login-password').value;
-
+			
 			Meteor.loginWithPassword(email, password, function(err){
 				t.find('.error').innerHTML =  err.reason;
 				return;
@@ -197,7 +201,12 @@ if (Meteor.isClient) {
 			e.preventDefault();
 			var email = t.find('#login-email').value
 			var password = t.find('#login-password').value;
-			
+			if (t.find('#login-email').checkValidity() === false) {
+				return t.find('.error').innerHTML = 'Invalid Email';
+			}
+			if(password.length < 5) {
+				return t.find('.error').innerHTML = 'Password must be atleast 5 characters';
+			}
 			Accounts.createUser({email: email, password : password}, function(err){
 				t.find('.error').innerHTML =  err.reason;
 				return;
