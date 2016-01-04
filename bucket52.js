@@ -1,5 +1,4 @@
 Memories = new Mongo.Collection("memories");
-
 var b52 = {
 	buildMemories: function() {
 		this.memories = Memories.find({owner: Meteor.userId()});
@@ -65,6 +64,29 @@ var b52 = {
 	}
 }; 
 
+Meteor.methods({
+	addMemory: function(formObj) {
+		if (! Meteor.userId()) {
+      		throw new Meteor.Error("not-authorized");
+    	}
+		if (formObj.week < 1 || formObj.week > 53){
+			throw new Meteor.Error("invalid-week");
+		}
+		Memories.insert({
+			text: formObj.text,
+			createdAt: new Date(),
+			week: formObj.week,
+			owner: Meteor.userId()
+		});
+	},
+	deleteMemory: function(id) {
+		var mem = Memories.findOne(id);
+		if(mem.owner !== Meteor.userId()){
+			throw new Meteor.Error('not authorized');
+		}
+		Memories.remove(id);
+	}
+});
 
 if (Meteor.isClient) {
 	Template.layout.onRendered(function () {
@@ -151,32 +173,60 @@ if (Meteor.isClient) {
 			history.back();
 		}
 	});
+	
+	Template.logins.helpers({
+		loginError: null
+	});
+	
+	Template.logins.events({
+		"click #login-buttons-facebook": function() {
+			Meteor.loginWithFacebook();
+		},
+		'click #login-signin' : function(e, t){
+			e.preventDefault();
+			var email = t.find('#login-email').value
+			var password = t.find('#login-password').value;
+
+			Meteor.loginWithPassword(email, password, function(err){
+				t.find('.error').innerHTML =  err.reason;
+				return;
+			}); 
+			return false;
+		},
+		'click #login-signup': function(e, t) {
+			e.preventDefault();
+			var email = t.find('#login-email').value
+			var password = t.find('#login-password').value;
+			
+			Accounts.createUser({email: email, password : password}, function(err){
+				t.find('.error').innerHTML =  err.reason;
+				return;
+			});
+
+			return false;
+		},
+		'keyup input': function(e, t) {
+			var buttons = t.find('.buttons');
+			var email = t.find('#login-email');
+			var pass = t.find('#login-password');
+			var isButtonVisible = b52.hasClass('show', buttons);
+			var hideSocials = b52.hasClass('hide-social', t.find('#login'));
+			var logins = t.find('#login');
+			var error = t.find('.error');
+			if(error.innerHTML.length > 0 ) error.innerHTML = ''; 
+			if(!hideSocials && email.value.length > 0 || !hideSocials && pass.value.length > 0) {
+				logins.className = 'hide-social';
+			}
+			if(hideSocials && email.value.length === 0 && pass.value.length === 0) {
+				logins.className = '';
+			}
+			if(email.value.length > 0 && pass.value.length > 0 && !isButtonVisible) {
+				buttons.className += ' show'
+			}
+		}
+	});
+
 }
-
-Meteor.methods({
-	addMemory: function(formObj) {
-		if (! Meteor.userId()) {
-      		throw new Meteor.Error("not-authorized");
-    	}
-		if (formObj.week < 1 || formObj.week > 53){
-			throw new Meteor.Error("invalid-week");
-		}
-		Memories.insert({
-			text: formObj.text,
-			createdAt: new Date(),
-			week: formObj.week,
-			owner: Meteor.userId()
-		});
-	},
-	deleteMemory: function(id) {
-		var mem = Memories.findOne(id);
-		if(mem.owner !== Meteor.userId()){
-			throw new Meteor.Error('not authorized');
-		}
-		Memories.remove(id);
-	}
-});
-
 if (Meteor.isServer) {
   Meteor.startup(function () {
 	Meteor.publish("memories", function () {

@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway);
 
 $raleway-font: 'Raleway', sans-serif;
-$fade: linear-gradient(rgb(255, 255, 51) 33%,rgb(255, 133, 51) 66%, rgb(51, 173, 255) 100%);
+$fade: linear-gradient(rgb(255, 255, 51) 15%,rgb(255, 133, 51) 55%, rgb(51, 173, 255) 100%);
 
 body {
 	width: 100%;
@@ -35,7 +35,7 @@ a, a:visited, a:link, a:active, a:hover {
 	justify-content: flex-start;
 	transition: transform 0.3s;
 	.show-sidebar & {
-		transform: translateX(18rem);
+		transform: translate3d(70%, 20%, 0);
 		.sidebar-modal {
 			display: block;
 		}

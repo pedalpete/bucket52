@@ -1,0 +1,28 @@
+<template name="logins">
+	<div id="login">
+		<div class="login-text-and-button">
+		<div class="login-button single-login-button " id="login-buttons-facebook">
+			<div class="login-image" id="login-buttons-image-facebook"></div>
+			<span id="sign-in-facebook" class="text-besides-image sign-in-text-facebook">Sign in with Facebook</span>
+		</div>
+		<br>
+		</div>
+		<h3>or</h3>
+		<div class="login-text-and-button">
+			<span class="error"></span>
+			<form id="login-form">
+				<input type="email" id="login-email" required placeholder="enter email" />
+				<input type="password" id="login-password" require placeholder="and a password" />
+				<div class="buttons">
+					<button type="submit" id="login-signin" class="button show"><span>Sign in</span>
+						<i class="fa fa-arrow-circle-o-right"></i>
+					</button>
+					<span class="or">or</span>
+					<button type="submit" id="login-signup" class="button show"><span>Create Account</span>
+						<i class="fa fa-arrow-circle-o-right"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</template>

@@ -1,0 +1,88 @@
+@import url(http://fonts.googleapis.com/css?family=Merriweather+Sans);
+#login {
+	display: flex;
+	justify-content: space-around;
+	transition: transform 0.3s;
+	
+	@media all and (max-width: 610px) {
+		flex-direction: column;
+		align-items: center;	
+	}
+	.error {
+		color: rgb(230, 80, 10);
+		font-size: 1rem;
+		font-weight: 700;
+		line-height: 1.5rem;
+	}
+	&.hide-social {
+		div:first-child, h3 {
+			display: none;
+		}
+	}
+	.login-button {
+		padding-left: 1rem;
+		height: 35px;
+		background: none;
+		border: none;
+		display: flex;
+		align-items: center;
+		background-size: 35px 35px;
+		background-position: right center;
+		background-repeat: no-repeat;
+		border-radius: 4px;
+		color: white;
+		font-family:"Merriweather Sans", sans-serif;
+		font-size: 14px;
+		margin-bottom: 15px;
+		width: 205px;
+		border-bottom: 2px solid transparent;
+		border-left: 1px solid transparent;
+		border-right: 1px solid transparent;
+		box-shadow: 0 4px 2px -2px gray;
+		text-shadow: rgba(0, 0, 0, .5) -1px -1px 0;
+		cursor: pointer;
+	}
+	#login-buttons-facebook {
+		border-color: #2d5073;
+		background-color: #3b5998;
+		background-image: url(http://icons.iconarchive.com/icons/danleech/simple/512/facebook-icon.png);
+	}
+	form#login-form {
+		input {
+			 font-size: 1.25rem;
+			 display: block;
+			 margin-bottom: 0.5rem;
+			 paddding: 0.25rem;
+		}
+		.buttons {
+			display: none;
+			&.show {
+				display: flex;
+				
+				justify-content: space-between;
+			}
+			.or {
+				font-size: 1.25rem;
+				padding: 0rem 1rem;
+				margin-top: 1.25rem;
+			}
+		}
+		.button {
+			font-size: 1rem;
+			display: inline;
+			padding: 0.75rem;
+			margin: 0.75rem 0;
+			i {
+				font-size: 1rem;
+			}
+			&:first-child {
+			background-color: rgb(120, 10, 110);
+			}
+		}
+	}
+	button#twitter {
+		border-color: #007aa6;
+		background-color: #008cbf;
+		background-image: url(https://twitter.com/images/resources/twitter-bird-white-on-blue.png);
+	}
+}

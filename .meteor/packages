@@ -24,3 +24,4 @@ fortawesome:fontawesome
 seba:minifiers-autoprefixer
 reywood:iron-router-ga
 accounts-ui-unstyled
+accounts-password
