@@ -39,6 +39,7 @@ var b52 = {
 	},
 	init: function() {
 		this.weeks = this.getWeeks();
+		this.setCurrentWeek();
 		this.weeks[this.setCurrentWeek() -1].currentWeek = true;
 		if (this.currentWeek > 1) this.weeks[this.currentWeek - 2].previousWeek = true;
 	},
@@ -46,7 +47,7 @@ var b52 = {
 	setCurrentWeek: function(){
 		var today = moment();
 		var firstDay = moment(this.weeks[0].date);
-		this.currentWeek =  Math.floor(firstDay.diff(today, 'days') / 7) + 1;
+		this.currentWeek =  new Date().getWeek() + 1;
 		return this.currentWeek;
 	},
 	slideout: { 
