@@ -234,6 +234,53 @@ if (Meteor.isClient) {
 			}
 		}
 	});
+	
+	Template.passwordReset.helpers({
+		resetPassword : function(t) {
+			return Session.get('resetPassword');
+		}
+	});
+	
+	Template.passwordReset.events({
+		'submit form#reset-email' : function(e, t) {
+			e.preventDefault()
+			var email = t.find('#login-email');
+			console.log('email', email);
+			
+			if (email.checkValidity()) {
+				Session.set('loading', true);
+				Accounts.forgotPassword({email: email.value}, function(err){
+				if (err)
+					console.log('password resset error', err);
+				else {
+					console.log('email sent');
+					history.back();
+				}
+				Session.set('loading', false);
+				});
+			}
+			return false; 
+		},
+
+		'submit form#reset-password' : function(e, t) {
+			e.preventDefault();
+			var pw = t.find('#password').value;
+			if (pw.length > 4) {
+				Session.set('loading', true);
+				Accounts.resetPassword(Session.get('resetPassword'), pw, function(err){
+				if (err)
+					console.log('error resetting password', err);
+				else {
+					Session.set('resetPassword', null);
+					console.log('password reset');
+					Router.go('/');
+				}
+				Session.set('loading', false);
+				});
+			}
+			return false; 
+		}
+	});
 
 }
 if (Meteor.isServer) {
@@ -242,4 +289,7 @@ if (Meteor.isServer) {
 		return Memories.find({owner: this.userId});
 	});
   });
+  
+	Accounts.emailTemplates.siteName = "Bucket52";
+	Accounts.emailTemplates.from = "Hi <hi@bucket52.com>";
 }
