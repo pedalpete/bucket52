@@ -44,9 +44,7 @@ var b52 = {
 	},
 	memories: [],
 	setCurrentWeek: function(){
-		var today = moment();
-		var firstDay = moment(this.weeks[0].date);
-		this.currentWeek =  new Date().getWeek() + 1;
+		this.currentWeek =  new Date().getWeek();
 		return this.currentWeek;
 	},
 	slideout: { 
@@ -114,6 +112,7 @@ if (Meteor.isClient) {
 		},
 		'click a.logout': function() {
 			Meteor.logout();
+			b52.init(); //need to rebuild the weeks
 		}
 	});
 	
