@@ -1,11 +1,35 @@
 <template name="welcome">
 	<div class="welcome">
-		<h1>Make Every Week Count</h1>
-		<h3>Do one remarkable thing every week for a whole year.
-			Keep track, create memories, inspire others...</h3>
-		{{> logins}}
-		<span class="terms">by using this site you agree to the <a href="terms">terms of use</a></span>
-		<span class="contact">we may send reminders for you to come back and visit us, or about updates and other cool stuff</span>
+		<div class="hero">
+			<h1>Make Every Week Count</h1>
+			<h3>Your bucket list can't wait, do one memorable thing every week</h3>
+			{{> logins}}
+			<span class="terms">by using this site you agree to the <a href="terms">terms of use</a></span>
+			<span class="contact">we may send reminders for you to come back and visit us, or about updates and other cool stuff</span>
+		</div>
+		<div class="steps">
+			<div>
+				<h3>Do something notable</h3>
+				<i class="fa fa-star"></i>
+				<p>some weeks will be big, some weeks will be small,
+					the key is to look around and do something different</p>
+			</div>
+			<div>
+				<h3>Keep track of it</h3>
+				<i class="fa fa-pencil"></i>
+				<p>just a quick snippet, pretty soon you'll be able to 
+					add photos, you may even get a little reward</p>
+			</div>
+			<div>
+				<h3>Do more great things</h3>
+				<i class="fa fa-repeat"></i>
+				<p>keep it going, just don't break the chain. one 
+					things leads to discovering more, discuss with friends 
+					and enjoy</p>
+			</div>
+		</div>
+		{{> footer}}
 	</div>
+	
 	{{> calendarBack}}
 </template>
