@@ -74,7 +74,8 @@ Meteor.methods({
 			text: formObj.text,
 			createdAt: new Date(),
 			week: formObj.week,
-			owner: Meteor.userId()
+			owner: Meteor.userId(),
+			share: formObj.share
 		});
 	},
 	deleteMemory: function(id) {
@@ -117,24 +118,34 @@ if (Meteor.isClient) {
 	});
 	
 	Template.addMemory.events({
-		"submit .add-memory": function(evt) {
+		"click .save-memory": function(evt) {
 			evt.preventDefault();
+			function shareState(button) {
+				return button.getAttribute('data-share');
+			}
+			var form = document.querySelector('form.add-memory');
 			var formObj = {
-				text: evt.target.text[0].value,
-				week: evt.target.text[1].value
+				text: document.querySelector('textarea[name="memory"]').value,
+				week: document.querySelector('input[name="week"]').value,
+				share: shareState(evt.currentTarget)
 			};
+
 			if(!b52.checkValidWeek(formObj.week)) return Router.go('error');
 			Meteor.call('addMemory', formObj);
 			history.back();
 		},
 		"keyup textarea": function(evt) {
-			var button = document.querySelector('.add-memory button');
-			var isVisible = b52.hasClass('show', button);
+			var buttons = document.querySelectorAll('.save-memory');
+			var isVisible = b52.hasClass('show', buttons[0]);
 			if (evt.target.value.length > 0 && !isVisible) {
-				return button.className +=' show';
+				return [].forEach.call(buttons, function(but){
+					but.className +=' show';
+				});
 			}
 			if (evt.target.value.length === 0 && isVisible) {
-				button.className = button.className.replace(' show', '');
+				[].forEach.call(buttons, function(but){
+					but.className = but.className.replace(' show', '');
+				});
 			}
 		}
 	});
@@ -170,6 +181,12 @@ if (Meteor.isClient) {
 				return mem.id === id;
 			});
 			history.back();
+		}
+	});
+	
+	Template.memory.helpers({
+		isOwner: function() {
+			return this.owner === Meteor.userId();
 		}
 	});
 	
@@ -244,7 +261,6 @@ if (Meteor.isClient) {
 		'submit form#reset-email' : function(e, t) {
 			e.preventDefault()
 			var email = t.find('#login-email');
-			console.log('email', email);
 			
 			if (email.checkValidity()) {
 				Session.set('loading', true);
@@ -285,7 +301,10 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
 	Meteor.publish("memories", function () {
-		return Memories.find({owner: this.userId});
+		return Memories.find({ $or: [
+			{owner: this.userId},
+			{share: {$ne: 'private'}}
+		]});
 	});
   });
   

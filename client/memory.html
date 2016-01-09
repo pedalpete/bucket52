@@ -1,8 +1,16 @@
 <template name="memory">
 	{{> back}}
 	<div class="memory">
-		<div>{{text}}</div>
-		<a class="delete" data-id="{{_id}}" data-week="{{week}}">
-		<i class="fa fa-times-circle fa-large"></i>delete</a>
+		{{#if text}}
+			<div>{{text}}</div>
+		{{else}}
+			<div>Sorry, the owner has kept this content private</div>
+		{{/if}}
+		{{#if isOwner}}		
+			<a class="delete" data-id="{{_id}}" data-week="{{week}}">
+				<i class="fa fa-times-circle fa-large"></i>delete
+			</a>
+		{{/if}}
 	</div>
+	{{> calendarBack}}
 </template>

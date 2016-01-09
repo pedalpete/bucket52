@@ -3,11 +3,17 @@
 	{{> back}}
 	<form name="add-memory" class="add-memory">
 		<h1>What did you do that was special this week?</h1>
-		<textarea name="text" placeholder="Tell us about it..."></textarea>
-		<input type="hidden" name="text" value="{{week}}" />
-		<button type="submit" class="button">
-			<span>You're awesome for doing this!</span>
-			<i class="fa fa-arrow-circle-o-right"></i>
-		</button>
+		<textarea name="memory" placeholder="Tell us about it..."></textarea>
+		<input type="hidden" name="week" value="{{week}}" />
+		<div class="buttons">
+			<button class="button save-memory" data-share="public">
+				<span>Tell the world!</span>
+				<i class="fa fa-globe"></i>
+			</button>
+			<button class="button save-memory" data-share="private">
+				<span>just quietly...</span>
+				<i class="fa fa-user-secret"></i>
+			</button>
+		</div>
 	</form>
 </template>
