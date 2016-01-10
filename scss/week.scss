@@ -30,13 +30,9 @@
 			justify-content: center;
 		}
 	}
-	.memory-snip {
-		padding: 0.35rem;
-		max-height: 80%;
-		height: 80%;
-		overflow: hidden;
-		color: rgba(250, 250, 250, 0.7);
-		text-overflow: ellipsis;
+	.memory-snip i {
+		font-size: 12rem;
+		color: rgba(130, 240, 30, 0.5);
 	}
 	&.footer {
 		 width: calc((100% / 5) *3);
