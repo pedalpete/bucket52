@@ -9,6 +9,7 @@
 	position: fixed;
 	top: 3rem;
 	z-index: -1;
+	-webkit-backface-visibility: hidden;
 	.calendar .week {
 		width: calc(100vw / 5);
 	}
