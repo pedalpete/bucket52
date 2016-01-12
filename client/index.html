@@ -41,7 +41,9 @@
 			<li><a href="/about">about</a></li>
 			<li><a href="/contact">contact</a></li>
 			<li><a href="/terms">terms</a></li>
-			<li><a class="logout" href="/">logout</a></li>
+			{{#if currentUser}}
+				<li><a class="logout" href="/">logout</a></li>
+			{{/if}}
 		</ul>
   	</div>
 </template>

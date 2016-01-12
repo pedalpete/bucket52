@@ -13,7 +13,6 @@ var b52 = {
 	checkValidWeek: function(week) {
 		return week == this.currentWeek || week == this.currentWeek - 1;
 	},
-	calendarBack: new Array(51).join().split('').map(function(a,i){return i}),
 	hasClass: function(className, elem) {
 		return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
 	},
@@ -95,11 +94,6 @@ if (Meteor.isClient) {
 	
 	b52.init();
 	Meteor.subscribe("memories");
-	Template.calendarBack.helpers({
-		weeks: function(){
-			return b52.calendarBack;
-		}
-	});
 	
 	Template.calendar.helpers({
 		weeks: function() {
@@ -112,8 +106,11 @@ if (Meteor.isClient) {
 			b52.slideout.close();
 		},
 		'click a.logout': function() {
-			Meteor.logout();
-			b52.init(); //need to rebuild the weeks
+			Meteor.logout(function(){
+				b52.init(); //need to rebuild the weeks
+				Router.go('/');
+			});
+
 		}
 	});
 	
@@ -155,6 +152,7 @@ if (Meteor.isClient) {
 			return this.currentWeek || this.previousWeek;
 		}
 	})
+	
 	Template.header.events({
 		'click .menu-button': function(evt) {
 			if(b52.slideout.state === 'closed'){
@@ -170,7 +168,7 @@ if (Meteor.isClient) {
 		'click .sidebar-modal': function(){
 			b52.slideout.close();
 		}
-	})
+	});
 	
 	Template.memory.events({
 		'click .delete': function(evt) {
