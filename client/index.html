@@ -15,7 +15,7 @@
 	<meta property="og:description" content="Health trackers are so 2015, in 2016 start tracking your life. Make sure you're doing interesting and remarkable things. It's easy with Bucket52. Your bucket list doesn't have to wait..." />
 </head>
 
-<body>
+<body class="calendarBack">
 </body>
 
 <template name="header">
@@ -27,16 +27,15 @@
 
 <template name="layout">
 	{{> sidemenu}}
-	<div class="content pusher">
-		<div class="sidebar-modal"></div>
-		{{> header}}
-		{{> yield}}
-	</div>
+		<div class="content pusher">
+			<div class="sidebar-modal"></div>
+			{{> header}}
+			{{> yield}}
+		</div>
 </template>
 
 <template name="sidemenu">
 	<div id="slideout-menu" class="sidebar">
-		{{> calendarBack}}
 		<ul>
 			<li>I think you're pretty awesome</li>
 			<li><a href="/about">about</a></li>

@@ -51,12 +51,12 @@ var b52 = {
 		state: 'closed',
 		close: function() {
 			var slideout = document.body;
-			slideout.className = slideout.className.replace('show-sidebar', '');
+			slideout.className = slideout.className.replace(' show-sidebar', '');
 			b52.slideout.state = 'closed';
 		},
 		open: function() {
 			var slideout = document.body;
-			slideout.className = slideout.className += 'show-sidebar';
+			slideout.className = slideout.className += ' show-sidebar';
 			b52.slideout.state = 'open';
 		}
 	}

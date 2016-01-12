@@ -1,0 +1,37 @@
+$backgroundImg: ();
+$backgroundPos: ();
+$rowCount: 0;
+$colCount: 0;
+@for $i from 1 through 80 {
+
+	@if ($i % 6 == 0) {
+		$rowCount: $rowCount + 1;
+	}
+	@if ($i % 5 == 0) {
+		$colCount: 0;
+	} @else {
+		$colCount: $colCount + 1;
+	}
+	$backColor: rgba(random(256)-1, random(256)-1, random(256)-1, 0.3);
+	$row: calc((100vw / 5) * #{$rowCount});
+	$top: calc((100vw / 5) * #{$colCount});
+	$backgroundImg: join(
+		$backgroundImg,
+		(linear-gradient(to bottom, #{$backColor}, #{$backColor})),
+		comma
+	);
+	
+	$backgroundPos: join(
+		$backgroundPos,
+		#{$top} + ' ' + #{$row},
+		comma
+	);
+}
+  
+
+.calendarBack {
+	background-repeat: no-repeat;
+	background-image: $backgroundImg;
+	background-position: $backgroundPos;
+	background-size: calc(100vw / 5) calc(100vw /5);
+}
