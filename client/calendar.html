@@ -1,14 +1,10 @@
 <template name="calendar">
-	{{#if currentUser}}
-		<div class="calendar">
-			{{#each weeks}}
-				{{> week}}
-			{{/each}}
-			<div class="week footer">
-				{{> footer}}
-			</div>
+	<div class="calendar">
+		{{#each weeks}}
+			{{> week}}
+		{{/each}}
+		<div class="week footer">
+			{{> footer}}
 		</div>
-	{{else}}
-		{{> welcome}}
-	{{/if}}
+	</div>
 </template>

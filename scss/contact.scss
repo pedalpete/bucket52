@@ -1,0 +1,24 @@
+.contact {
+	
+	input, textarea {
+			font-size: 1.25rem;
+			display: block;
+			margin-bottom: 0.5rem;
+			padding: 0.25rem;
+			width: 25rem;
+			resize: none;
+			&.msg {
+				height: 20rem;
+			}
+	}
+	
+	.twitter {
+		color: #0089cb;
+		font-size: 2rem;
+		vertical-align: middle;
+		border-radius: 50%;
+		padding: 0.25rem 0.45rem;
+		border: 1px solid #0089cb;
+	}
+		
+}

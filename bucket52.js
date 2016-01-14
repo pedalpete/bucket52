@@ -39,7 +39,12 @@ var b52 = {
 		this.weeks = this.getWeeks();
 		this.setCurrentWeek();
 		this.weeks[this.setCurrentWeek() -1].currentWeek = true;
-		if (this.currentWeek > 1) this.weeks[this.currentWeek - 2].previousWeek = true;
+		this.weeks[this.setCurrentWeek() -1].message = 'this week I'
+		
+		if (this.currentWeek > 1) {
+			this.weeks[this.currentWeek - 2].previousWeek = true;
+			this.weeks[this.currentWeek - 2].message = 'last week I'
+		}
 	},
 	memories: [],
 	setCurrentWeek: function(){
@@ -83,6 +88,20 @@ Meteor.methods({
 			throw new Meteor.Error('not authorized');
 		}
 		Memories.remove(id);
+	},
+	contactUs: function(text, from) {
+
+	//	check(text, String);
+	//	check(from, String);
+		
+		this.unblock();
+
+		Email.send({
+			to: 'pete@bucket52.com',
+			from: 'hi@bucket52.com',
+			subject: 'From Contact Form',
+			text: text + '\n from: ' + from
+		});
 	}
 });
 
@@ -196,7 +215,7 @@ if (Meteor.isClient) {
 		"click #login-buttons-facebook": function() {
 			Meteor.loginWithFacebook();
 		},
-		'click #login-signin' : function(e, t){
+		'click #login-signin': function(e, t) {
 			e.preventDefault();
 			
 			var email = t.find('#login-email').value;
@@ -292,6 +311,31 @@ if (Meteor.isClient) {
 				});
 			}
 			return false; 
+		}
+	});
+	
+	Template.contact.events({
+		'submit #contactForm': function(e, t) {
+			e.preventDefault();
+			var email = t.find('.email');
+			var msg = t.find('.msg');
+			if(msg.value.length > 5) {
+				Meteor.call('contactUs', msg.value, email.value);
+				history.back();
+			} else {
+				alert('Sorry, something went wrong sending your email');
+			}
+		},
+		'keyup': function(e, t) {
+			var button = t.find('.button');
+			var email = t.find('.email');
+			var msg = t.find('.msg');
+			var isButtonVisible = b52.hasClass('show', button);
+			if (!isButtonVisible && email.value.length > 2 && msg.value.length > 4) {
+				return button.className += ' show';
+			} else if(isButtonVisible && (email.value.length <= 2 || msg.value.length <= 4)) {
+				return button.className = button.className.replace(' show', '');
+			}
 		}
 	});
 

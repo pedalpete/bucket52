@@ -1,6 +1,17 @@
 <template name="contact">
 	{{> back}}
-	<div>I promise I'll get around to 
-		building a contact page soon, but for now, 
-		tweet at me @pedalpete</div>
+	<div class="contact content-page">
+		<h1>Hi! Thanks for reaching out.</h1>
+		<h3>Let me know how I can help</h3>
+		<p>Pete</p>
+		<form id="contactForm">
+			<input type="email" class="email" required placeholder="enter your email"/>
+			<textarea class="msg" placeholder="what are ya thinkin' about..." ></textarea>
+			<button type="submit" class="button"><span>Good Chatting...</span>
+						<i class="fa fa-arrow-circle-o-right"></i>
+			</button>
+		</form>
+		<h3> or catch me on twitter <a href="http://twitter.com/bucket52app" class="twitter" target="new"><i class="fa fa-twitter"></i></a></h3>
+		
+	</div>
 </template>
