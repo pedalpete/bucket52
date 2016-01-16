@@ -9,7 +9,6 @@
 	}
 	h3 {
 		font-size: 1.5rem;
-		color: rgb(10, 110, 115);
 	}
 	.contact {
 		display: block;
@@ -25,7 +24,7 @@
 		}
 	}
 	.steps {
-		background-color: rgb(110, 180, 180);
+		background-color: rgba(190,60,60, 0.8);
 		display: flex;
 		justify-content: space-around;
 		flex-wrap: wrap;
@@ -53,6 +52,29 @@
 		i {
 			color: rgba(0, 0, 0, 0.5);
 			font-size: 4rem;
+		}
+	}
+	.more-details {
+		background-color: rgba(110, 180, 180, 0.5);
+		font-size: 1.5rem;
+		color: #fff;
+	}
+	.how-it-works {
+		background-color: rgba(150, 30, 150,0.3);
+		color: #555;
+		font-size: 1.5rem;
+	}
+	.example-entries {
+		background-color: #DEDEDE;
+		color: #555;
+		font-size: 1.5rem;
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			li {
+				padding-top: 1rem;
+			}
 		}
 	}
 	footer {
