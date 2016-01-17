@@ -117,6 +117,12 @@ if (Meteor.isClient) {
 	Template.calendar.helpers({
 		weeks: function() {
 			return b52.buildMemories();
+		},
+		invokeAfterLoad: function() {
+			Meteor.defer(function(){
+				var offset = document.querySelector('.current').offsetTop;
+				window.scrollTo(offset, 0);
+			});	
 		}
 	});
 	
@@ -218,11 +224,11 @@ if (Meteor.isClient) {
 		'click #login-signin': function(e, t) {
 			e.preventDefault();
 			
-			var email = t.find('#login-email').value;
-			if (t.find('#login-email').checkValidity() === false) {
+			var email = t.find('.login-email').value;
+			if (t.find('.login-email').checkValidity() === false) {
 				return t.find('.error').innerHTML = 'Invalid Email';
 			}
-			var password = t.find('#login-password').value;
+			var password = t.find('.login-password').value;
 			
 			Meteor.loginWithPassword(email, password, function(err){
 				t.find('.error').innerHTML =  err.reason;
@@ -232,9 +238,9 @@ if (Meteor.isClient) {
 		},
 		'click #login-signup': function(e, t) {
 			e.preventDefault();
-			var email = t.find('#login-email').value
-			var password = t.find('#login-password').value;
-			if (t.find('#login-email').checkValidity() === false) {
+			var email = t.find('.login-email').value
+			var password = t.find('.login-password').value;
+			if (t.find('.login-email').checkValidity() === false) {
 				return t.find('.error').innerHTML = 'Invalid Email';
 			}
 			if(password.length < 5) {
@@ -247,19 +253,15 @@ if (Meteor.isClient) {
 
 			return false;
 		},
-		'keyup input': function(e, t) {
+		'keyup form input': function(e, t) {
 			var buttons = t.find('.buttons');
-			var email = t.find('#login-email');
-			var pass = t.find('#login-password');
+			var email = t.find('.login-email');
+			var pass = t.find('.login-password');
 			var isButtonVisible = b52.hasClass('show', buttons);
-			var hideSocials = b52.hasClass('hide-social', t.find('#login'));
-			var logins = t.find('#login');
+			var logins = t.find('.login');
 			var error = t.find('.error');
 			if(error.innerHTML.length > 0 ) error.innerHTML = ''; 
-			if(!hideSocials && email.value.length > 0 || !hideSocials && pass.value.length > 0) {
-				logins.className = 'hide-social';
-			}
-			if(hideSocials && email.value.length === 0 && pass.value.length === 0) {
+			if(email.value.length === 0 && pass.value.length === 0) {
 				logins.className = '';
 			}
 			if(email.value.length > 0 && pass.value.length > 0 && !isButtonVisible) {

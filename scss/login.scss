@@ -14,11 +14,6 @@
 		font-weight: 700;
 		line-height: 1.5rem;
 	}
-	&.hide-social {
-		div:first-child, h3 {
-			display: none;
-		}
-	}
 	.login-button {
 		padding-left: 1rem;
 		height: 35px;
@@ -47,7 +42,7 @@
 		background-color: #3b5998;
 		background-image: url(http://icons.iconarchive.com/icons/danleech/simple/512/facebook-icon.png);
 	}
-	form#login-form {
+	form.login-form {
 		input {
 			 font-size: 1.25rem;
 			 display: block;
