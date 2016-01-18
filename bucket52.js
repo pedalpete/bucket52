@@ -11,7 +11,7 @@ var b52 = {
 		return b52.weeks;
 	},
 	checkValidWeek: function(week) {
-		return week == this.currentWeek || week == this.currentWeek - 1;
+		return week <= b52.currentWeek;
 	},
 	hasClass: function(className, elem) {
 		return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
@@ -38,11 +38,9 @@ var b52 = {
 	init: function() {
 		this.weeks = this.getWeeks();
 		this.setCurrentWeek();
-		this.weeks[this.setCurrentWeek() -1].currentWeek = true;
-		this.weeks[this.setCurrentWeek() -1].message = 'this week I'
+		this.weeks[this.currentWeek -1].message = 'this week I'
 		
 		if (this.currentWeek > 1) {
-			this.weeks[this.currentWeek - 2].previousWeek = true;
 			this.weeks[this.currentWeek - 2].message = 'last week I'
 		}
 	},
@@ -174,7 +172,11 @@ if (Meteor.isClient) {
 	
 	Template.week.helpers({
 		weekLink: function(){
-			return this.currentWeek || this.previousWeek;
+			return this.week <= b52.currentWeek;
+		},
+		linkClass: function() {
+			if(this.week === b52.currentWeek || this.week ===  b52.currentWeek -1) return 'current';
+			return;
 		}
 	})
 	

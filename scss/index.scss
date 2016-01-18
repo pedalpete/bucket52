@@ -13,9 +13,8 @@ body {
 	background-attachment: fixed;
 	font-size: 10px;
 	user-select: none;
-	background: $fade;
 	background-attachment: fixed;
-	background-color:  rgb(51, 173, 255);
+	background: $fade;
 	&.show-sidebar {
 		overflow: hidden;
 	}
@@ -34,6 +33,7 @@ a, a:visited, a:link, a:active, a:hover {
 	flex-direction: column;
 	justify-content: flex-start;
 	transition: transform 0.3s;
+	z-index: 2;
 	.show-sidebar & {
 		transform: translate3d(70%, 20%, 0);
 		.sidebar-modal {
@@ -65,6 +65,7 @@ header h1 span {
 
 .calendar {
 	background: $fade;
+	background-attachment: fixed;
 }
 .button {
 	padding: 1rem;
