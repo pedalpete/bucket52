@@ -80,11 +80,24 @@ Meteor.methods({
 			share: formObj.share
 		});
 	},
+	editMemory: function(formObj) {
+		var mem = Memories.findOne(formObj._id);
+		if(mem.owner !== Meteor.userId()){
+			throw new Meteor.Error('not authorized');
+		}	
+		Memories.update(formObj._id, {
+			$set: {
+				text: formObj.text, 
+				share: formObj.share,
+				updatedAt: new Date()
+				}
+		});
+	},
 	deleteMemory: function(id) {
 		var mem = Memories.findOne(id);
 		if(mem.owner !== Meteor.userId()){
 			throw new Meteor.Error('not authorized');
-		}
+		}	
 		Memories.remove(id);
 	},
 	contactUs: function(text, from) {
@@ -138,20 +151,29 @@ if (Meteor.isClient) {
 	});
 	
 	Template.addMemory.events({
-		"click .save-memory": function(evt) {
+		"click .save-memory": function(evt, t) {
 			evt.preventDefault();
 			function shareState(button) {
 				return button.getAttribute('data-share');
 			}
-			var form = document.querySelector('form.add-memory');
+			function validInput() {
+				if (t.find('input[name="week"]') && !b52.checkValidWeek(formObj.week)) return false;
+				if (!t.find('input[name="id]') || !t.find('input[name="id]').value) return false;
+				return true;
+			}
+			var form = t.find('form.add-memory');
 			var formObj = {
-				text: document.querySelector('textarea[name="memory"]').value,
-				week: document.querySelector('input[name="week"]').value,
+				text: t.find('textarea[name="memory"]').value,
 				share: shareState(evt.currentTarget)
 			};
-
-			if(!b52.checkValidWeek(formObj.week)) return Router.go('error');
-			Meteor.call('addMemory', formObj);
+			if(!validInput) return Router.go('error');
+			if (t.find('input[name="week"]')) {
+				formObj.week = t.find('input[name="week"]').value;
+				Meteor.call('addMemory', formObj);
+			} else {
+				formObj._id = t.find('input[name="id"]').value;
+				Meteor.call('editMemory', formObj);
+			}
 			history.back();
 		},
 		"keyup textarea": function(evt) {
@@ -167,6 +189,12 @@ if (Meteor.isClient) {
 					but.className = but.className.replace(' show', '');
 				});
 			}
+		}
+	});
+	
+	Template.addMemory.helpers({
+		showButton: function() {
+			return this.edit ? 'show' : '';
 		}
 	});
 	
@@ -212,6 +240,9 @@ if (Meteor.isClient) {
 	Template.memory.helpers({
 		isOwner: function() {
 			return this.owner === Meteor.userId();
+		},
+		formatText: function() {
+			return this.text.replace(/\r?\n/g, '<br />');
 		}
 	});
 	

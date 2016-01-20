@@ -2,14 +2,20 @@
 	{{> back}}
 	<div class="memory">
 		{{#if text}}
-			<div>{{text}}</div>
+			<div>{{{formatText}}}</div>
 		{{else}}
 			<div>Sorry, this one is private</div>
 		{{/if}}
-		{{#if isOwner}}		
-			<a class="delete" data-id="{{_id}}" data-week="{{week}}">
-				<i class="fa fa-times-circle fa-large"></i>delete
-			</a>
+		{{#if isOwner}}	
+			<div class="buttons">	
+				<a class="edit" href="./{{_id}}/edit">
+					<i class="fa fa-pencil"></i>
+					edit
+				</a>
+				<a class="delete" data-id="{{_id}}" data-week="{{week}}">
+					<i class="fa fa-times-circle"></i>delete
+				</a>
+			</div>
 		{{/if}}
 	</div>
 </template>

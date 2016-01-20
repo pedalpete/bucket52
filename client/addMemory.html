@@ -2,14 +2,18 @@
 	{{> back}}
 	<form name="add-memory" class="add-memory">
 		<h1>What did you do that was special this week?</h1>
-		<textarea name="memory" placeholder="Tell us about it..."></textarea>
-		<input type="hidden" name="week" value="{{week}}" />
+		<textarea name="memory" placeholder="Tell us about it...">{{memory.text}}</textarea>
+		{{#if memory._id}}
+			<input type="hidden" name="id" value="{{memory._id}}"/>
+		{{else}}
+			<input type="hidden" name="week" value="{{week}}" />
+		{{/if}}
 		<div class="buttons">
-			<button class="button save-memory" data-share="public">
+			<button class="button save-memory {{showButton}}" data-share="public">
 				<span>remember it!</span>
 				<i class="fa fa-arrow-circle-o-right"></i>
 			</button>
-			<button class="button save-memory" data-share="private">
+			<button class="button save-memory {{showButton}}" data-share="private">
 				<span>keep secret</span>
 				<i class="fa fa-lock"></i>
 			</button>

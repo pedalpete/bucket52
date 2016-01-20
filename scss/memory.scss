@@ -11,16 +11,20 @@
 		padding: 1.5rem;
 		resize: none;
 	}
-	> a.delete {
-		background-color: rgb(250, 80, 80);
-		color: #DEDEDE;
-		padding: 1rem;
+	> .buttons {
 		align-self: flex-end;
-		margin: 1rem;
-		i {
-			padding-right: 0.75rem;
-			font-size: 1.5rem;
-			vertical-align: middle;
+		a {
+			&.delete {background-color: rgb(250, 80, 80);}
+			&.edit {background-color: rgb(30, 130, 180);}
+			color: #DEDEDE;
+			padding: 1rem;
+			
+			margin: 1rem;
+			i {
+				padding-right: 0.75rem;
+				font-size: 1.5rem;
+				vertical-align: middle;
+			}
 		}
 	}
 }
