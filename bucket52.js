@@ -1,13 +1,19 @@
 Memories = new Mongo.Collection("memories");
 var b52 = {
-	buildMemories: function() {
+	calCount: 0,
+	buildMemories: function(updateCount) {
 		this.memories = Memories.find({owner: Meteor.userId()});
 				this.memories.forEach(function(mem){
-				if (b52.weeks[mem.week-1].memories.length > 0) {
-					b52.weeks[mem.week-1].memories = [];
-				}
-				b52.weeks[mem.week-1].memories.push(mem);
+					var memWeek = mem.week-1;
+					if (b52.weeks[memWeek].memories.length === 0 ||
+						updateCount > b52.weeks[memWeek].updateCount ) {
+						b52.weeks[memWeek].memories = [];
+						b52.weeks[memWeek].updateCount = updateCount;
+						
+					}
+					b52.weeks[memWeek].memories.push(mem);
 			});
+		this.calCount++;
 		return b52.weeks;
 	},
 	checkValidWeek: function(week) {
@@ -38,13 +44,12 @@ var b52 = {
 	init: function() {
 		this.weeks = this.getWeeks();
 		this.setCurrentWeek();
-		this.weeks[this.currentWeek -1].message = 'this week I'
+		this.weeks[this.currentWeek -1].message = 'this week i'
 		
 		if (this.currentWeek > 1) {
-			this.weeks[this.currentWeek - 2].message = 'last week I'
+			this.weeks[this.currentWeek - 2].message = 'last week i'
 		}
 	},
-	memories: [],
 	setCurrentWeek: function(){
 		this.currentWeek =  new Date().getWeek();
 		return this.currentWeek;
@@ -127,7 +132,7 @@ if (Meteor.isClient) {
 	
 	Template.calendar.helpers({
 		weeks: function() {
-			return b52.buildMemories();
+			return b52.buildMemories(b52.calCount+1);
 		},
 		invokeAfterLoad: function() {
 			Meteor.defer(function(){
@@ -205,9 +210,12 @@ if (Meteor.isClient) {
 		linkClass: function() {
 			if(this.week === b52.currentWeek || this.week ===  b52.currentWeek -1) return 'current';
 			return;
+		},
+		memoriesCount: function() {
+			return this.memories.length > 1 ? this.memories.length : false;
 		}
 	})
-	
+
 	Template.header.events({
 		'click .menu-button': function(evt) {
 			if(b52.slideout.state === 'closed'){
@@ -227,25 +235,31 @@ if (Meteor.isClient) {
 	
 	Template.memory.events({
 		'click .delete': function(evt) {
+			console.log('evt', evt.target);
 			var id = evt.target.attributes.getNamedItem('data-id').value;
-			var week = evt.target.attributes.getNamedItem('data-week').value;
 			Meteor.call('deleteMemory', id);
-			b52.weeks[week-1].memories = b52.weeks[week-1].memories.filter(function(mem){
-				return mem.id === id;
-			});
-			history.back();
 		}
 	});
 	
 	Template.memory.helpers({
-		isOwner: function() {
+		showEditButtons: function() {
 			return this.owner === Meteor.userId();
 		},
 		formatText: function() {
 			return this.text.replace(/\r?\n/g, '<br />');
+		},
+		showBack: function() {
+			var path = new RegExp(/\/memory\//);
+			var test =  path.test(window.location.pathname);
+			return test;
 		}
 	});
 	
+	Template.back.events({
+		'click': function() {
+			history.back();
+		}
+	})
 	Template.logins.helpers({
 		loginError: null
 	});
@@ -383,6 +397,10 @@ if (Meteor.isServer) {
 			{share: {$ne: 'private'}}
 		]});
 	});
+	
+	Meteor.publish("weeklyMemories", function(week) {
+		return Memories.find({owner: this.userId},{week: week});
+	})
   });
   
 	Accounts.emailTemplates.siteName = "Bucket52";

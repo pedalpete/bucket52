@@ -1,0 +1,9 @@
+<template name="weeklyMemories">
+{{> back}}
+		{{> addMemory}}
+		<div class="weekly-memories">
+			{{#each memories}}
+				{{> memory}}
+			{{/each}}
+		</div>
+</template>

@@ -1,12 +1,13 @@
 <template name="week">
 	{{#if weekLink}}
-		<a class="week {{#unless memories}}{{linkClass}}{{/unless}}" href="addMemory/{{week}}">
+		<a class="week {{#unless memories}}{{linkClass}}{{/unless}}" href="weeklyMemories/{{week}}">
 			{{#if memories}}
-				{{#each memories}}
-				<a class="memory-snip" href="memory/{{_id}}">
+				<div class="memory-snip">
+					{{#if memoriesCount}}
+						<span class="count"><span>x</span>{{memoriesCount}}</span>
+					{{/if}}
 					<i class="fa fa-check-circle"></i>
-				</a>
-				{{/each}}
+				</div>
 			{{else}}
 				<div class="bubble"><span>
 					{{#if message}}
@@ -14,10 +15,10 @@
 					{{else}}
 						<h1>{{week}}</h1>
 					{{/if}}
-				</span></div>
+				</span></div>	
 			{{/if}}
 		</a>
-	{{else}}
+		{{else}}
 		<div class="week">
 			{{#if memories}}
 				{{#each memories}}

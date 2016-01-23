@@ -14,7 +14,14 @@
 	> .buttons {
 		align-self: flex-end;
 		a {
-			&.delete {background-color: rgb(250, 80, 80);}
+			&.delete {
+				border: 1px solid rgb(250, 80, 80);
+				color: rgb(250, 80, 80);
+				&:hover {
+					background-color: rgb(250, 80, 80);
+					color: #DEDEDE;
+				}
+			}
 			&.edit {background-color: rgb(30, 130, 180);}
 			color: #DEDEDE;
 			padding: 1rem;

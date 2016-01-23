@@ -34,9 +34,22 @@
     		padding: 2rem;
 		}
 	}
-	.memory-snip i {
-		font-size: 16vw;
-		color: rgba(130, 240, 30, 0.5);
+	.memory-snip {
+		.count {
+			    font-size: 11vw;
+				position: absolute;
+				text-align: center;
+				width: 13vw;
+				font-weight: 700;
+				color: rgba(230,230,230,0.7);
+				span {
+					font-size: 6vw;
+				}
+		}
+		 i {
+			font-size: 16vw;
+			color: rgba(130, 240, 30, 0.5);
+		 }
 	}
 	&.footer {
 		 width: calc((100% / 5) *3);

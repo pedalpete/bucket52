@@ -1,19 +1,21 @@
 <template name="memory">
-	{{> back}}
-	<div class="memory">
+	{{#if showBack}}
+		{{> back}}
+	{{/if}}
+	<div class="memory" >
 		{{#if text}}
-			<div>{{{formatText}}}</div>
+			<a href="/memory/{{_id}}">{{{formatText}}}</a>
 		{{else}}
 			<div>Sorry, this one is private</div>
 		{{/if}}
-		{{#if isOwner}}	
+		{{#if showEditButtons}}	
 			<div class="buttons">	
-				<a class="edit" href="./{{_id}}/edit">
+				<a class="edit" href="/memory/{{_id}}/edit">
 					<i class="fa fa-pencil"></i>
 					edit
 				</a>
 				<a class="delete" data-id="{{_id}}" data-week="{{week}}">
-					<i class="fa fa-times-circle"></i>delete
+					<i data-id="{{_id}}" class="fa fa-times-circle"></i>delete
 				</a>
 			</div>
 		{{/if}}
